@@ -1,0 +1,26 @@
+{
+  "name": "stardust-client",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "author": "Pedro Pinto <pedropinto.01@hotmail.com>",
+  "license": "MIT",
+  "types": "lib/index.d.ts",
+  "homepage": "https://github.com/itspedruu/stardust-client",
+  "scripts": {
+    "compile": "rmdir /S /Q lib 2>nul && tsc",
+    "test": "jest"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/node": "^16.7.2",
+    "@types/node-fetch": "^2.5.12",
+    "@typescript-eslint/eslint-plugin": "^4.29.3",
+    "@typescript-eslint/parser": "^4.29.3",
+    "dotenv": "^10.0.0",
+    "jest": "^27.0.6",
+    "typescript": "^4.3.5",
+    "uuid": "^8.3.2"
+  }
+}
