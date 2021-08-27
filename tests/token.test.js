@@ -139,12 +139,6 @@ describe('Transfer', () => {
 	});
 });
 
-test('Mutate', async () => {
-	const response = await Token.mutate(tokenId, {description: 'New Description'});
-
-	expect(response).toStrictEqual({});
-});
-
 test('Get', async () => {
 	const tokens = await Token.get(tokenId);
 

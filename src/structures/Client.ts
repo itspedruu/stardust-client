@@ -26,7 +26,7 @@ export default class Client {
 		}
 
 		const data = await response.json();
-
+		
 		if (response.status !== 500 && response.status !== 200) {
 			throw new Error(`Error while sending a request to the Stardust API: ${JSON.stringify(data)}`);
 		}
