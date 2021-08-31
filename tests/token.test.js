@@ -9,6 +9,8 @@ Client.setup(process.env.STARDUST_API_KEY);
 
 let uniqueId, playerId, secondUniqueId, secondPlayerId, templateId, tokenId, secondTokenId;
 
+jest.setTimeout(10000);
+
 beforeAll(async () => {
 	uniqueId = v4();
 	secondUniqueId = v4();
@@ -192,7 +194,7 @@ describe('Trade', () => {
 			]
 		});
 
-		expect(response.tradeId).toBe(true);
+		expect(response).toStrictEqual({});
 	});
 
 	test('By Player Id', async () => {
@@ -213,6 +215,6 @@ describe('Trade', () => {
 			]
 		});
 
-		expect(response.tradeId).toBe(true);
+		expect(response).toStrictEqual({});
 	});
 });
