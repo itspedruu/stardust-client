@@ -78,3 +78,12 @@ export interface TokenTransferOptions {
 	toUniqueId?: string;
 	tokenObjects: TokenObject[];
 }
+
+export interface TokenTradeOptions {
+	fromPlayerId?: string;
+	toPlayerId?: string;
+	fromUniqueId?: string;
+	toUniqueId?: string;
+	fromTokens: TokenObject[];
+	toTokens: TokenObject[];
+}

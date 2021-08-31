@@ -7,7 +7,7 @@ require('dotenv').config();
 // this is used to show devs how to use the setup
 Client.setup(process.env.STARDUST_API_KEY);
 
-let uniqueId, playerId, secondUniqueId, secondPlayerId, templateId, tokenId;
+let uniqueId, playerId, secondUniqueId, secondPlayerId, templateId, tokenId, secondTokenId;
 
 beforeAll(async () => {
 	uniqueId = v4();
@@ -45,6 +45,18 @@ beforeAll(async () => {
 	});
 
 	tokenId = tokenIds[0];
+
+	const secondTokenIds = await Token.mint({
+		playerId: secondPlayerId,
+		tokenObjects: [
+			{
+				templateId,
+				amount: "5"
+			}
+		]
+	});
+
+	secondTokenId = secondTokenIds[0];
 });
 
 describe('Mint', () => {
@@ -159,4 +171,48 @@ test('Get Mint Requests', async () => {
 	const requests = await Token.getMintRequests(tokenId);
 
 	expect(requests.length).toBeGreaterThanOrEqual(1);
+});
+
+describe('Trade', () => {
+	test('By Unique Id', async () => {
+		const response = await Token.trade({
+			fromUniqueId: uniqueId,
+			toUniqueId: secondUniqueId,
+			fromTokens: [
+				{
+					tokenId,
+					amount: "1"
+				}
+			],
+			toTokens: [
+				{
+					tokenId: secondTokenId,
+					amount: "1"
+				}
+			]
+		});
+
+		expect(response.tradeId).toBe(true);
+	});
+
+	test('By Player Id', async () => {
+		const response = await Token.trade({
+			fromPlayerId: playerId,
+			toPlayerId: secondPlayerId,
+			fromTokens: [
+				{
+					tokenId,
+					amount: "1"
+				}
+			],
+			toTokens: [
+				{
+					tokenId: secondTokenId,
+					amount: "1"
+				}
+			]
+		});
+
+		expect(response.tradeId).toBe(true);
+	});
 });

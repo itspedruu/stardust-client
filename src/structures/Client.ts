@@ -34,6 +34,27 @@ export default class Client {
 		return response.status === 200 ? data : null;
 	}
 
+	static async getGame() {
+		return Client.sendRequest({
+			method: 'GET',
+			path: Client.ENDPOINTS.GET_GAME
+		});
+	}
+
+	static async getHealth() {
+		return Client.sendRequest({
+			method: 'GET',
+			path: Client.ENDPOINTS.GET_HEALTH
+		});
+	}
+
+	static async getEndpoints() {
+		return Client.sendRequest({
+			method: 'GET',
+			path: Client.ENDPOINTS.OPEN_API
+		});
+	}
+
 	static get BASE_URL() {
 		return 'https://opzvmjx033.execute-api.us-east-1.amazonaws.com/v1';
 	}
@@ -42,6 +63,14 @@ export default class Client {
 		return {
 			'Content-Type': 'application/json;charset=UTF-8',
 			'x-api-key': process.env.STARDUST_API_KEY
+		}
+	}
+
+	static get ENDPOINTS() {
+		return {
+			GET_GAME: '/game/get',
+			GET_HEALTH: '/health',
+			OPEN_API: '/openapi'
 		}
 	}
 }

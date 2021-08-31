@@ -1,7 +1,7 @@
 import Client from '../structures/Client';
 import Player from './Player';
 
-import {Dictionary, TokenOperationOptions, TokenFetchAllOptions, TokenTransferOptions} from '../util/Interfaces';
+import {Dictionary, TokenOperationOptions, TokenFetchAllOptions, TokenTransferOptions, TokenTradeOptions} from '../util/Interfaces';
 
 export default class Token {
 	static get(tokenIds: number[]) {
@@ -112,6 +112,39 @@ export default class Token {
 			}
 		});
 	}
+
+	static async trade({fromUniqueId, toUniqueId, fromPlayerId, toPlayerId, fromTokens, toTokens}: TokenTradeOptions) {
+		if (!fromUniqueId && !fromPlayerId) {
+			throw new Error('fromUniqueId or fromPlayerId is required.');
+		}
+
+		if (!toUniqueId && !toPlayerId) {
+			throw new Error('toUniqueId or toPlayerId is required.');
+		}
+
+		const fromId = fromUniqueId ? await Player.getPlayerId(fromUniqueId) : fromPlayerId;
+
+		if (!fromId) {
+			return;
+		}
+
+		const toId = toUniqueId ? await Player.getPlayerId(toUniqueId) : toPlayerId;
+
+		if (!toId) {
+			return;
+		}
+
+		return Client.sendRequest({
+			method: 'POST',
+			path: Token.ENDPOINTS.TRADE,
+			body: {
+				fromPlayerId: fromId,
+				toPlayerId: toId,
+				fromTokens,
+				toTokens
+			}
+		});
+	}
 	
 	static get ENDPOINTS() {
 		return {
@@ -121,7 +154,8 @@ export default class Token {
 			MINT: '/token/mint',
 			BURN: '/token/burn',
 			MUTATE: '/token/mutate',
-			TRANSFER: '/token/transfer'
+			TRANSFER: '/token/transfer',
+			TRADE: '/trade/execute'
 		}
 	}
 }
