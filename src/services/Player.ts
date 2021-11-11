@@ -119,7 +119,7 @@ export default class Player {
 		}
 
 		return Client.sendRequest({
-			method: 'POST',
+			method: 'PUT',
 			path: Player.ENDPOINTS.MUTATE,
 			body: {
 				playerId: id,
